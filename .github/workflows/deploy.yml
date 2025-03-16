@@ -1,48 +1,39 @@
 name: Node.js CI/CD Pipeline
-
-on:
+'on':
   push:
     branches:
       - main
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-
       - name: Install dependencies
         run: npm install
-
       - name: Run tests
         run: npm test || echo "Tests failed!"
-
       - name: Build Docker image
         run: docker build -t node-app .
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
+      - name: Create SSH key file
+        run: |
+          echo "${{ secrets.AWS_SSH_KEY }}" | base64 --decode > key.pem
+          chmod 600 key.pem
       - name: Deploy to EC2
         env:
-          HOST: ${{ secrets.AWS_EC2_IP }}
-          USER: ${{ secrets.USERNAME }}
-          KEY: ${{ secrets.AWS_SSH_KEY }}
+          HOST: '${{ secrets.AWS_EC2_IP }}'
+          USER: '${{ secrets.USERNAME }}'
         run: |
-          echo "$KEY" > key.pem
-          chmod 600 key.pem
           ssh -o StrictHostKeyChecking=no -i key.pem $USER@$HOST << 'EOF'
             docker stop node-app || true
             docker rm node-app || true
@@ -50,3 +41,5 @@ jobs:
             docker run -d -p 80:3000 --name node-app node-app
             exit
           EOF
+
+
