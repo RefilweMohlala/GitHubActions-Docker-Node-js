@@ -30,3 +30,21 @@ This project demonstrates the use of **GitHub Actions** for **Continuous Integra
 
 - The application is automatically deployed to the EC2 instance every time a change is merged into `main`.
 - The pipeline ensures the app is always up-to-date with minimal manual intervention.
+
+## Screenshots
+
+Workflow file
+![workflow file](https://github.com/user-attachments/assets/7790707d-7909-48b5-9106-64cabbaf6f82)
+Running Action complete
+![action running complete](https://github.com/user-attachments/assets/cea47577-1ef7-4f46-9a95-ddd735608daa)
+Build logs
+![build log](https://github.com/user-attachments/assets/52d43d2f-c6e4-445b-8c9a-6337aaf48a9b)
+Deploy logs
+![deploy log](https://github.com/user-attachments/assets/2adc3c04-e70e-4ad0-848c-920139428d27)
+Dockerfile
+![dockerfile](https://github.com/user-attachments/assets/d0a6997d-f396-4c2f-a195-cb772ad70f63)
+WebApp deployment
+![web app deployment](https://github.com/user-attachments/assets/f2efe9e2-bb72-4d2a-a4ab-b9643aa16d5c)
+
+
+
